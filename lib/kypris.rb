@@ -9,3 +9,4 @@ module Kypris
 end
 
 require_relative "kypris/cli"
+require_relative "kypris/product"

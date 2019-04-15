@@ -8,11 +8,14 @@ class CommandLineInterface
   end
     
   def greeting  
+    puts "************************************************"
     puts "********** Welcome to Kypris Products! *********"
+    puts "************************************************"
   end
   
   def list_products
     puts "Here are our products:"
+    @products = Product.all
   end
   
   def menu
