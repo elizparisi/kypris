@@ -8,5 +8,6 @@ module Kypris
   # Your code goes here...
 end
 
-require_relative "kypris/cli"
-require_relative "kypris/product"
+require_relative "./kypris/cli"
+require_relative "./kypris/product"
+require_relative "./kypris/scraper"

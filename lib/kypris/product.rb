@@ -1,40 +1,27 @@
-Class Product
+require_relative 'version.rb'
+
+class Product
   # return a bunch of instances of products
-  attr_accessor :name, :price, :url, :description
-  def self.today
-    self.scrape_products
-  end
-    
-  def self.scrape_products
-    # go to Kypris, find products
-    # scrape the properties
-    # instantiate products
-    
-    products = []
-    
-    site = "https://shop.kyprisbeauty.com/"
-    page = Nokogiri::HTML(open(site))
-    product.name = page.css("h4.title").text
-    product.price = page.css("span.price").text.gsub("\n","")
-    product.url = page.css("a.clearfix").first.attr("href")
-    
-    
-  def self.scrape_descriptions
+  attr_accessor :name, :price, :url
   
+  
+  def initialize(name, price, url)
+    @name = name
+    @price = price
+    @url = url    
+    @@all << self
   end
-    
-    product_1 = Product.new
-    product_1.name =
-    product_1.price =
-    product_1.url =
-    product_1.description =
-    
-    product_2 = Product.new
-    product_2.name =
-    product_2.price =
-    product_2.url =
-    product_2.description =
-    
-    products
+
+  def self.all
+      @@all
+  end
+
+  def self.create(name, price, url)
+    product = self.new(name, price, url) if find_by_name(name).nil?
+  end
+
+  def self.find_by_name(name)
+    @@all.find { |product| product.name == name }
   end
 end
+
