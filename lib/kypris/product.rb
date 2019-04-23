@@ -1,27 +1,22 @@
-require_relative 'version.rb'
-
 class Product
   # return a bunch of instances of products
-  attr_accessor :name, :price, :url
+  attr_accessor :name, :price, :url, :description
   
-  
-  def initialize(name, price, url)
-    @name = name
-    @price = price
-    @url = url    
+  @@all = []
+
+  def initialize(product_hash)
+    product_hash.each{|k, v| self.send(("#{k}="), v)}
     @@all << self
   end
 
+  def self.create_product_list(product_list_array)
+    product_list_array.each do |product|
+      Product.new(product)
+    end
+  end
+
   def self.all
-      @@all
-  end
-
-  def self.create(name, price, url)
-    product = self.new(name, price, url) if find_by_name(name).nil?
-  end
-
-  def self.find_by_name(name)
-    @@all.find { |product| product.name == name }
+    @@all
   end
 end
 
