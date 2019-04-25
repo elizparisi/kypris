@@ -1,16 +1,14 @@
 class Scraper
   
-  def self.scraping_page
-   url = ("https://shop.kyprisbeauty.com/") 
-   doc = Nokogiri::HTML(url) 
+  def scrape_page
+    html = open("https://shop.kyprisbeauty.com/")
+    doc = Nokogiri::HTML(html)
    
-   get_page = doc.search("div.row.products")
+    doc.css("div.row.products").each do |product|
     
-   get_page.each do |product|
-     new_product = Product.new 
-     new_product.name = product.search("h4.title").text
-     new_product.price = product.search("span.price").text.gsub("\n","")
-     new_product.url = "https://shop.kyprisbeauty.com"+product.search("a.clearfix").first.attr("href")
-     end 
-    end   
-  end 
+      name = product.css("h4.title").text.strip 
+      new_product  = Product.new(name) unless name.empty?
+      new_product.price = product.css("span.price").text unless new_product.nil?
+   end
+end 
+end 

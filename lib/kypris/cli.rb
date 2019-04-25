@@ -1,46 +1,51 @@
 class CLI
-
-  def call 
-    welcome
-    print_products
-    answer
-  end 
   
-  def welcome 
-    puts "************************************************"
-    puts "********** Welcome to Kypris Products! *********"
-    puts "************************************************"
-    puts "We have the following products..."
-  end 
-  
-  def print_products 
-    Scraper.scraping_page
-    Product.all.each_with_index do |product, i|
-      puts "#{i+1}. #{product.name}"
+ def start 
+ puts  "                        WELCOME !!!       "
+  Scraper.new.scrape_page
+  list_product
+  input = ""
+  while input != 0
+    menu
+    input = gets.chomp.downcase
+    if input == "list"  
+      list_product
+    elsif input == "exit"
+      input = 0
+    else
+      product_price(input.to_i)
     end
+  end
+  puts "Thank You For Visiting Our Store!"
   end 
-
-  def answer
-    input = nil
-    
-    while input != "exit"
-      puts ""
-      puts "Please type the product number you'd like to know more about."
-      input = gets.strip
-
-      if input.count("a-zA-Z") > 0
-        puts "That's not a number between 1 - 17. Please try again."
-        
-        elsif input.to_i > 17 || input.to_i <= 0 
-            puts "That's not a number between 1 - 17."
-
-        elsif input.to_i-1 <= Product.all.size
-          product = Product.all[input.to_i-1]
-          puts "That product is #{product.name}"
-          puts "Price: #{product.price}"
+  
+  def list_product
+    Product.all.each.with_index(1) do |product, index|
+      #binding.pry
+      puts "#{index}. #{product.name}" 
       end 
-    end 
-    puts ""
-    puts "Thanks for coming!"
+  end
+  
+  def menu
+   puts "*****************************************************************"
+   puts "Type the number to get more information about paticular product: "
+   puts "-----------------------------------------------------------------"
+   puts "Type 'list' to show current products"
+   puts "-----------------------------------------------------------------"
+   puts  "Type 'exit' to quit"
+   puts "*****************************************************************"
+    
+  end 
+  
+  def product_price(selection)
+    if selection <= Product.all.size && selection > 0 
+      index = selection - 1
+      obj = Product.all[index]
+      puts "Name of the Product is: #{obj.name}! "
+      puts "The price for the currect product is:"
+      puts obj.price
+    else
+      puts "Please enter a valid selection"
+    end
   end 
 end 

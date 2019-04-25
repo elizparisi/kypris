@@ -1,16 +1,15 @@
 class Product
   # return a bunch of instances of products
-  attr_accessor :name, :price, :url
+  attr_accessor :name, :price  
   @@all = []
-
-  def initialize(name=nil, price=nil, url=nil)
+  
+  def initialize(name) 
     @name = name
-    @price = price
-    @url = url 
-    @@all << self
+    @@all << self 
+    
   end
-
-  def self.all 
+  
+  def self.all
     @@all
   end 
 end 
